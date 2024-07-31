@@ -1,4 +1,3 @@
--- Create Customer table
 CREATE TABLE Customer (
     CustomerID SERIAL PRIMARY KEY,
     Name VARCHAR(100),
@@ -6,7 +5,6 @@ CREATE TABLE Customer (
     Phone VARCHAR(20)
 );
 
--- Create Vehicle table
 CREATE TABLE Vehicle (
     VehicleID SERIAL PRIMARY KEY,
     Make VARCHAR(50),
@@ -19,7 +17,6 @@ CREATE TABLE Vehicle (
     OwnerName VARCHAR(100)
 );
 
--- Create Invoice table
 CREATE TABLE Invoice (
     InvoiceID SERIAL PRIMARY KEY,
     InvoiceDate DATE,
@@ -35,7 +32,6 @@ CREATE TABLE Invoice (
     FOREIGN KEY (VehicleID) REFERENCES Vehicle(VehicleID)
 );
 
--- Create Job table
 CREATE TABLE job (
     JobID SERIAL PRIMARY KEY,
     VehicleID INT,
@@ -48,7 +44,6 @@ CREATE TABLE job (
     FOREIGN KEY (InvoiceID) REFERENCES Invoice(InvoiceID)
 );
 
--- Create Parts table
 CREATE TABLE Parts (
     PartID SERIAL PRIMARY KEY,
     JobID INT,
@@ -62,23 +57,18 @@ CREATE TABLE Parts (
     FOREIGN KEY (InvoiceID) REFERENCES Invoice(InvoiceID)
 );
 
--- Copy data into Customer table from CSV
 COPY Customer (Name, Address, Phone)
 FROM 'C:\Program Files\customer.csv' WITH (FORMAT csv, HEADER true);
 
--- Copy data into Vehicle table from CSV
 COPY Vehicle (Make, Model, Year, Color, VIN, Reg, Mileage, OwnerName)
 FROM 'C:\Program Files\vehicle.csv' WITH (FORMAT csv, HEADER true);
 
--- Copy data into Invoice table from CSV
 COPY Invoice (invoiceid, InvoiceDate, Subtotal, SalesTaxRate, SalesTax, TotalLabour, TotalParts, Total, CustomerID, VehicleID)
 FROM 'C:\Program Files\invoice.csv' WITH (FORMAT csv, HEADER true);
 
--- Copy data into Job table from CSV
 COPY Job (Jobid, VehicleID, Description, Hours, Rate, Amount, InvoiceID)
 FROM 'C:\Program Files\job.csv' WITH (FORMAT csv, HEADER true);
 
--- Copy data into Parts table from CSV
 COPY Parts (PartID, JobID, Part, PartName, Quantity, UnitPrice, Amount, InvoiceID)
 FROM 'C:\Program Files\parts22.csv' WITH (FORMAT csv, HEADER true);
 
