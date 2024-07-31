@@ -1,13 +1,17 @@
-WITH AvgJobCost AS (
-    SELECT AVG(j.amount) AS avg_cost
+WITH JobAvgCost AS (
+    SELECT
+        j.description,
+        AVG(j.amount) AS avg_cost
     FROM JOB j
     GROUP BY j.description
 )
-SELECT 'Highest' AS cost_type, MAX(avg_cost) AS avg_cost
-FROM AvgJobCost
-UNION ALL
-SELECT 'Lowest' AS cost_type, MIN(avg_cost) AS avg_cost
-FROM AvgJobCost;
+
+SELECT
+    description,
+    avg_cost
+FROM JobAvgCost
+WHERE avg_cost = (SELECT MAX(avg_cost) FROM JobAvgCost)
+   OR avg_cost = (SELECT MIN(avg_cost) FROM JobAvgCost);
 
 
 
